@@ -36,10 +36,7 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
             lock: false
         };
 
-        private.sfx = {
-            shoot: game.add.audio('rainbowelectric')
-
-        };
+        
 
         private.scalex = public.scale.x;
 
@@ -65,7 +62,9 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
         //call this during update based on cursors
         public.jump = function () {
             if (!private.walkable) return;
+            
             if (public.body.onFloor()) {
+                game.sfx.jump.play();
                 private.motor.jumping = true;
                 private.motor.jumpPack = private.motor.jumpPackFull;
             }
@@ -120,6 +119,7 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
             public.body.velocity.x = private.motor.currentSpeed;
             game.scanlines.x = public.body.x - 500;
             
+            
             //console.log(game.scanlines.x);
 
 
@@ -144,19 +144,22 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
     };
         
         //flash player sprite on hit
-        public.onHit = function(){
-            
-            console.log(public.tint);
+        public.onHit = function(shake){
+            game.sfx.explode.play()
+            //console.log(public.tint);
             var tween =  game.add.tween(public);
-            var tween2 =  game.add.tween(public.body);
+            
             tween.to({tint: Math.random() * 0xFFFFFF},500, Phaser.Easing.Bounce.InOut,true);
             tween.to({tint: 0xFFFFFF},500, Phaser.Easing.Bounce.InOut,true);
-            tween2.to({x: public.body.x-50, y: public.body.y + 5}, 300, Phaser.Easing.Bounce.InOut, true);
-
-            game.cameraShake(100, 10, !game.finalSceneReached);
+            if (!shake){
+                var tween2 =  game.add.tween(public.body);
+                tween2.to({x: public.body.x-15, y: public.body.y - 5}, 300, Phaser.Easing.Bounce.InOut, true);
+                game.cameraShake(100, 10, !game.finalSceneReached);
+            }
         }
 
         public.shoot = function(){
+            
             if (!private.attack.canFire || private.attack.lock) {
                 return;
             }
@@ -168,7 +171,7 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
                 xoffset = -xoffset;
             }
             tween.to({x: public.body.x + xoffset, y: public.body.y + 5}, 100, Phaser.Easing.Bounce.InOut, true);
-            console.log(public.x + " " +public.x+xoffset);
+            //console.log(public.x + " " +public.x+xoffset);
             
             //game.juicy.shake(10, 100);
             //game.camera.follow(public, Phaser.Camera.FOLLOW_PLATFORMER);
@@ -190,7 +193,7 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
                 game.cameraShake(100, 10, true);
             }
 
-            private.sfx.shoot.play();
+            game.sfx.shoot.play();
             var projectile = Projectile.new(game, Player.projectileGroup,
                 public.body.x, public.body.y, private.direction, 'rainbowflicker');
             private.attack.fireRateTimer = private.attack.fireRate;
@@ -204,6 +207,7 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
             if (private.attack.fireRateTimer <= 0){
                 private.attack.canFire = true;
             }
+            game.staticsheet.x = game.camera.x;
         };
 
         public.faceDirection = function(direction){
@@ -231,13 +235,13 @@ define(['globals', 'projectile', 'text'], function (globals, Projectile,Text) {
     Player.preload = function(game) {
         // Load the main player spritesheet
         game.load.spritesheet('playersprite',
-            '/data/img/sprite/mainchar-sheet.png', 64, 90);
+            'data/img/sprite/mainchar-sheet.png', 64, 90);
 
 
 //        for(var i = 0; i < 2; i++){
 //            game.load.audio('rainbowelectric'+i, '/data/sfx/rainbowelectric'+i+'.wav');
 //        }
-        game.load.audio('rainbowelectric', '/data/sfx/rainbowelectric0.wav');
+
 
 
         Player.projectileGroup = game.add.group();

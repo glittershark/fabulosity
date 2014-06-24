@@ -8,17 +8,20 @@ define(["globals"],function(globals) {
         public.anchor.setTo(0.5, 0.5);
         private.length = 1;
         private.lengthTimer = private.length;
+        //public.blendMode = PIXI.blendModes.MULTIPLY;
 
         group.add(public);
         game.phaser.physics.arcade.enableBody(public);
+        
+        private.timer = 2;
 
         damage = damage || 0;
         switch(direction){
             case globals.direction.left:
-                public.body.velocity.x = -500;
+                public.body.velocity.x = -400;
                 break;
             case globals.direction.right:
-                public.body.velocity.x = 500;
+                public.body.velocity.x = 400;
                 break;
         }
         
@@ -46,6 +49,10 @@ define(["globals"],function(globals) {
                 public.animations.frame = Math.floor(Math.random() * 8);
                 public.body.gravity.y = globals.GRAVITY;
             }
+            
+            if (private.timer > 0)
+                private.timer -= game.phaser.time.physicsElapsed;
+            else public.kill();
         };
 
         return public;
@@ -54,7 +61,7 @@ define(["globals"],function(globals) {
     Projectile.preload = function(game){
         //globals.randomizer.preload(game, 'rainbow', '.png', 0, 12, globals.fileType.image);
         game.load.spritesheet('rainbowflicker',
-            '/data/img/sprite/AllTheRainbows.png', 32, 32);
+            'data/img/sprite/AllTheRainbows.png', 32, 32);
 
     };
 

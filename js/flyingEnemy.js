@@ -65,6 +65,10 @@ define(["globals"],function(Globals){
             next.to({ alpha: 0 }, 800, null)
             hotFlashTween.chain(next);
             hotFlashTween.start();
+            
+            globalGame.staticsheet.alpha = 1;
+            game.add.tween(globalGame.staticsheet).to({alpha: .3}, 800, Phaser.Easing.Sinusoidal.InOut, true);
+
         }
 
         public.setHitPoints= function(points)
@@ -81,6 +85,7 @@ define(["globals"],function(Globals){
             private.hitPoints -= points;
             if (private.hitPoints <= 0) {
                 public.die();
+                globalGame.sfx.hit2.play();
             }
         };
 
@@ -99,6 +104,7 @@ define(["globals"],function(Globals){
         public.update = function()
         {
             if (game.finalSceneReached) public.die();
+            
             public.body.x-=2;
 
             if(public.body.x < 0)
@@ -116,6 +122,7 @@ define(["globals"],function(Globals){
     Enemy.preload = function(game)
     {
         game.load.spritesheet('words', 'data/img/sprite/wordEnemies.png', 128, 128);
+        
        // Globals.randomizer.preload(game, 'squareparticle', '.png', 0, 25, Globals.fileType.image);
         Enemy.enemyGroup = game.add.group();
 

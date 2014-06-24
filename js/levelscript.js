@@ -40,21 +40,21 @@ define(["globals", "text"], function(globals, Text) {
         private.dialogue.punk = [
             {text: "Hello",                 subtext: "Hello"},
             {text: "What's up?",            subtext: "What's up?"},
-            {text: "Oh, cool",              subtext: "Really? I bet you're a dumbass."},
+            {text: "Oh, cool. On what?",    subtext: "Oh, another meathead."},
             {text: "Nice.",                 subtext: "HahahahahahahhaHAHAHA"},
             {text: "Thanks.",               subtext: "Fuck you."},
-            {text: "Yeah, I love pink.",    subtext: "Yeah, I'm gay."},
-            {text: "I like your clothes.",  subtext: "I think your fucking g-string's stupid as shit."} 
+            {text: "I love pink.",          subtext: "I'm gay."},
+            {text: "I like your clothes.",  subtext: "You have a fucking gstring"} 
         ];
         
         private.dialogue.buff = [
             {text: "Hey.",                  subtext: "Hey."},
-            {text: "Just working out.",     subtext: "Muscles muscules muscles."},
-            {text: "Working on my biceps.", subtext: "Muscles muscules."},
-            {text: "I like your hair.",     subtext: "Well, your hair's fucking gay."},
+            {text: "Just working out.",     subtext: "Working on muscles."},
+            {text: "Working on my 'ceps.",  subtext: "Muscles muscules muscles."},
+            {text: "I like your hair.",     subtext: "Your hair's fucking gay."},
             {text: "It has a nice color.",  subtext: "Queer ass cunt bitch."},
-            {text: "It's nice.",            subtext: "What a stereotypical color for a punk like you."},
-            {text: "Thanks.",               subtext: "Fuck you too, faggot."},
+            {text: "It's nice.",            subtext: "What a faggot."},
+            {text: "Thanks.",               subtext: "Fuck you stupid shit."},
         ];
         
         private.dialogue.punkcount = 0;

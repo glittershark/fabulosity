@@ -3,8 +3,8 @@ define(['map'], function(Map) {
         house: {
             tiles: {
                 name: 'bedroom-roman',
-                file: '/data/map/house.json',
-                image: '/data/img/map/bedroom-roman.png'}
+                file: 'data/map/house.json',
+                image: 'data/img/map/bedroom-roman.png'}
         }
     };
 
